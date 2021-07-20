@@ -1,0 +1,16 @@
+ @media print {
+     .print-container{
+         max-width: 100vw;
+         min-height: 100vh;
+     }
+     .print-text{
+        font-size: 14pt;
+      }
+ }
+
+ li:before {
+    content: "•";         /* Insert content that looks like bullets */
+    font-size: 20px;
+    padding-right: 8px;
+    color: white; 
+  }
