@@ -28,37 +28,41 @@ const App = () => {
   })
   useEffect(updateInstance, [texx]);
 
-  return(  <div className="flex"  >
+  return( 
+     
+     <div className="flex"  >
     
-    <div>
-      <Document
-        file={instance.url}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        <Page pageNumber={pageNumber} />
-      </Document>
-      <p>Page {pageNumber} of {numPages}</p>
-    </div>
+          <div className="" >
+            <Document
+              className="w-1/2"
+              file={instance.url}
+              onLoadSuccess={onDocumentLoadSuccess}
+            >
+              <Page pageNumber={pageNumber} />
+            </Document>
+            <p>Page {pageNumber} of {numPages}</p>
+          </div>
 
-    <div>
-    <PDFDownloadLink document={< Quixote text={texx} /> } fileName="somename.pdf">
-      {({ blob, url, loading, error }) =>
-        loading ? 'Loading document...' : 'Download now!'
-      }
-    </PDFDownloadLink>
-  </div>
-  <div>
-    <input type="text" className="ring-2" onChange={handleIput} />
-    <button onClick={async() =>{
-      const blob = await pdf(< Quixote text={texx} /> ).toBlob();
-      print(URL.createObjectURL(blob));
-    }}>
-      {
-        instance.loading ? 'Loading document...' : 'Print now!'
-      }
-    </button>
-  </div>
-  </div>)
+          <div>
+              <PDFDownloadLink document={< Quixote text={texx} /> } fileName="somename.pdf">
+                {({ blob, url, loading, error }) =>
+                  loading ? 'Loading document...' : 'Download now!'
+                }
+              </PDFDownloadLink>
+              <div>
+                <input type="text" className="ring-2" onChange={handleIput} />
+                <button onClick={async() =>{
+                  const blob = await pdf(< Quixote text={texx} /> ).toBlob();
+                  print(URL.createObjectURL(blob));
+                }}>
+                  {
+                    instance.loading ? 'Loading document...' : 'Print now!'
+                  }
+                </button>
+              </div>
+          </div>
+       </div>
+  )
   };
 
 export default App 
