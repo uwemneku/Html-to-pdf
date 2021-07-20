@@ -1,53 +1,31 @@
-import React from "react";
-import ReactToPrint from "react-to-print";
 
-const thStyle = {
-  fontFamily: "Anton",
-  fontWeight: "normal",
-  fontStyle: "normal",
-  // margin: "20px",
-};
 
-class ComponentToPrint extends React.Component {
+import TemplateCard from './components/TemplateCard';
+
+import React, { useRef } from 'react';
+import ReactToPrint from 'react-to-print';
+
+export class ComponentToPrint extends React.PureComponent {
   render() {
     return (
-      <table style={{margin:20}}>
-        <thead style={thStyle}>
-          <th>column 1</th>
-          <th>column 2</th>
-          <th>column 3</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>data 1</td>
-            <td>data 2</td>
-            <td>data 3</td>
-          </tr>
-          <tr>
-            <td>data 1</td>
-            <td>data 2</td>
-            <td>data 3</td>
-          </tr>
-          <tr>
-            <td>data 1</td>
-            <td>data 2</td>
-            <td>data 3</td>
-          </tr>
-        </tbody>
-      </table>
+      <TemplateCard />
     );
   }
 }
 
-class Example extends React.Component {
+class Example extends React.PureComponent {
   render() {
     return (
       <div>
         <ReactToPrint
-          trigger={() => <button>Print this out!</button>}
+          trigger={() => {
+            // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+            // to the root node of the returned component as it will be overwritten.
+            return <a href="#">Print this out!</a>;
+          }}
           content={() => this.componentRef}
         />
-        <ComponentToPrint ref={(el) => (this.componentRef = el)} />
+        <ComponentToPrint ref={el => (this.componentRef = el)} />
       </div>
     );
   }

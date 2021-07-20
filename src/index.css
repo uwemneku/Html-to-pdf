@@ -27,7 +27,6 @@ code {
     height: initial !important;
     overflow: initial !important;
     -webkit-print-color-adjust: exact;
-    @apply bg-gray-700;
   }
 
 }
@@ -42,9 +41,6 @@ code {
 
 @page {
   size: auto;
-  margin: 10mm;
+  margin: 0mm;
 }
 
-@page:first{
-  margin-top: 0mm;
-}
