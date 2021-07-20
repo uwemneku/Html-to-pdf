@@ -50,7 +50,7 @@ const App = () => {
   <div>
     <input type="text" className="ring-2" onChange={handleIput} />
     <button onClick={async() =>{
-      const blob = await pdf(<Quixote />).toBlob();
+      const blob = await pdf(< Quixote text={texx} /> ).toBlob();
       print(URL.createObjectURL(blob));
     }}>
       {
