@@ -96,27 +96,35 @@ export default function BusinessData() {
                     </Grid>
                 </Grid>
                 <Grid item xs >
-
                     <Box height="100vh" maxHeight="100vh" overflow="scroll" >
-                        <Document
-                        className="w-1/2"
-                        file={instance.url}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        >
-                        <Page pageNumber={pageNumber} />
-                        </Document>
-                        <p>Page {pageNumber} of {numPages}</p>
-                        <div>
-                        <input type="text" className="ring-2" onChange={handleIput} />
-                        <button onClick={async() =>{
-                        const blob = await pdf(Doc ).toBlob();
-                        print(URL.createObjectURL(blob));
-                        }}>
-                        {
-                            instance.loading ? 'Loading document...' : 'Print now!'
-                        }
-                        </button>
-                    </div>
+                    {
+                        instance.loading ?
+                        <Box bgcolor="red" width="100%" height="100%" >
+
+                        </Box>
+                        :
+                        <Box>
+                            <Document
+                            className="w-1/2"
+                            file={instance.url}
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            >
+                            <Page pageNumber={pageNumber} />
+                            </Document>
+                            <p>Page {pageNumber} of {numPages}</p>
+                            <div>
+                            <input type="text" className="ring-2" onChange={handleIput} />
+                            <button onClick={async() =>{
+                            const blob = await pdf(Doc ).toBlob();
+                            print(URL.createObjectURL(blob));
+                            }}>
+                            {
+                                instance.loading ? 'Loading document...' : 'Print now!'
+                            }
+                            </button>
+                        </div>
+                        </Box>
+                    }
                     </Box>
                 </Grid>
             </Grid>

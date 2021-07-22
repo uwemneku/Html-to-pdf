@@ -4,7 +4,7 @@ import Quixote from './PdfMaker'
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import print from "print-js"
-import './App.css'
+// import './App.css'
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import CropTest from '../CropTest';
