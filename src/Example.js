@@ -32,3 +32,5 @@ class Example extends React.PureComponent {
 }
 
 export default Example;
+
+

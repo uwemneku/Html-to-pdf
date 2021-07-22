@@ -34,5 +34,10 @@
   }
   to {
     transform: rotate(360deg);
+    color: #1f2125;
   }
+}
+canvas{
+  width: 100% !important;
+  height: 100% !important;
 }

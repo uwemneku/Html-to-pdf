@@ -3,26 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.2.0",
+    "@material-ui/core": "^4.12.2",
     "@react-pdf/renderer": "^2.0.16",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "autoprefixer": "9",
     "faker": "^5.5.3",
-    "postcss": "7",
     "print-js": "^1.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-image-crop": "^8.6.12",
     "react-pdf": "5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
