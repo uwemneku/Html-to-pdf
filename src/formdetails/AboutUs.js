@@ -12,7 +12,7 @@ const AboutUs = () => {
     return(
         <Container maxWidth="sm">
                         <Box display="flex" flexDirection="column"  >
-                            <TextField label="About" variant="outlined" multiline minRows={3} onChange={(e)=>updateDate(e, "aboutUs")} />
+                            <TextField label="About" variant="outlined" value={data.aboutUs} multiline minRows={3} onChange={(e)=>updateDate(e, "aboutUs")} />
                         </Box>
         </Container>
     )

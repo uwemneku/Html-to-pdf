@@ -20,6 +20,14 @@ const inputFields = [
                         {
                             id:"businessAddress",
                             label:"Business Address"
+                        },
+                        {
+                            id:"cage",
+                            label:"CAGE"
+                        },
+                        {
+                            id:"duns",
+                            label:"DUNS"
                         }
                      ]
 
@@ -43,7 +51,7 @@ const BusinessDetails = () => {
                       )
                   }
                   <Box display="flex" marginTop={2} marginBottom={2}>
-                      <AlertDialog text="Upload business Logo" content={<CropTest croppedImageUrl={setData} />} />
+                      <AlertDialog text={data.logoUrl ?"Change Business Logo" : "Upload business Logo"} content={<CropTest croppedImageUrl={setData} />} />
                   </Box>
               </Box>
            </Container>

@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CropTest from './CropTest';
 import { DataContext } from './App';
 
-export default function AlertDialog({text, content}) {
+export default function AlertDialog({text, content, heading, fullScreen}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -25,14 +25,16 @@ export default function AlertDialog({text, content}) {
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         {text}
       </Button>
+      
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        fullScreen={true}
+        keepMounted={true}
+        fullScreen={fullScreen}
       >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{heading}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {content}

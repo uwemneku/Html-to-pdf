@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -9,6 +9,10 @@ import BusinessDetails from './formdetails/BusinessDetails';
 import PersonalDetails from './formdetails/PersonalDetails';
 import { DataContext } from './App';
 import AboutUs from './formdetails/AboutUs';
+import List from './formdetails/List';
+import  print  from 'print-js';
+import { GeneratedPdf } from './BusinessData';
+import { Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,16 +31,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['', '', "", '', ''];
+  return ['', '', "", '', '', ""];
 }
 
-export default function HorizontalLinearStepper() {
+export default function HorizontalLinearStepper({documentUrl}) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [data, setData] = useContext(DataContext)
+  const {competencies, differentiators, naics} = data
   const steps = getSteps();
- const getStepContent = [<BusinessDetails setData={setData} />, <PersonalDetails setData={setData} />,  <AboutUs /> ]
+ const getStepContent = [<BusinessDetails setData={setData} />, 
+                         <PersonalDetails setData={setData} />,  
+                         <AboutUs />, 
+                         <List sectionData={competencies} sectionName="competencies" />, 
+                         <List sectionData={differentiators} sectionName="differentiators"  />, 
+                         <List sectionData={naics} sectionName="naics"  /> ]
 
  const triggerDocumentUpdate = () => {
     setData(prev => {
@@ -44,6 +54,11 @@ export default function HorizontalLinearStepper() {
       return {...prev, triggerUpdate:!trig } 
     })
  }
+
+ useEffect(() => {
+   console.log(data.documentUrl)
+   
+ }, [data.documentUrl])
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -113,9 +128,51 @@ export default function HorizontalLinearStepper() {
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished
             </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
+            <Hidden mdUp>
+              <GeneratedPdf  data={data}/>
+            </Hidden>
+            <Button
+                variant="outlined"
+                color="primary"
+                style={{marginLeft:"auto"}}
+                onClick={handleReset} className={classes.button}
+                 >
+                    {
+                      "Edit document"
+                        // instance.loading ? 'Loading document...' : 'Print now!'
+                     }
             </Button>
+            <a download href={data.documentUrl} style={{textDecoration:"none"}} >
+              <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                  style={{marginLeft:"auto", textDecoration:"none"}}
+                      onClick={() =>{
+                          //  print(data.documentUrl);
+                          }}
+                  >
+                      {
+                        "Download document"
+                      }
+              </Button>
+              </a>
+            <Hidden mdDown >
+              <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                  style={{marginLeft:"auto"}}
+                      onClick={() =>{
+                          print(data.documentUrl);
+                          }}
+                  >
+                      {
+                        "Print document"
+                      }
+              </Button>
+            </Hidden>
+           
           </div>
         ) : (
           <div>

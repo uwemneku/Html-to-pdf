@@ -1,57 +1,73 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, TextField, Box, InputLabel, OutlinedInput, Typography, FormControl, InputAdornment, IconButton, Grid, Container, Paper } from '@material-ui/core';
 import PositionedSnackbar from './PositionedSnackbar';
+import { DataContext } from './App';
 
-export default function SingleInput({sectionName}) {
-    const [bulletPoints, setBulletPoints] = useState(["testing one date"]) 
+export default function SingleInput({data, updateData, removeData, name}) {
+    const [errorMessage, setErrorMessage] = useState("")
+
+    // const [bulletPoints, setBulletPoints] = useState(["testing one date"]) 
     const [isInputEmpty, setIsInputEmpty ]= useState(false)
     const addItem = () => {
         const value = document.getElementById("newInput").value
-        if(value.length > 2)
-        {
-            setBulletPoints([...bulletPoints, value])
+        if(data.includes(value)){
+
+            showAlert("You've added this to the list")
+            
+        }
+        else if(value.length > 2)
+        {  updateData(value)
             document.getElementById("newInput").value = ""
         }
         else{
-            setIsInputEmpty(true)
-            setTimeout(() => {
-                setIsInputEmpty(false)
-            }, 2000);
+            showAlert("Cannot Insert Empty Text")
         }
     }
     const removeItem = (item) =>{
-        setBulletPoints(prev => prev.filter(text => text !== item ))
+        removeData(item)
+    }
+    const showAlert = (message) =>{
+        setErrorMessage(message)
+        setIsInputEmpty(true)
+            setTimeout(() => {
+                setIsInputEmpty(false)
+            }, 2000);
+
     }
     return (
-        <Container maxWidth="xs"  >
-            {
-                bulletPoints.map(item => (
-                    <Container maxWidth="xs"  >
-                        <Box margin={2} position="relative" >
-                            <Paper elevation={1}>
-                                <Box textAlign="center" padding={2} >
-                                    <Typography>{item}</Typography>
+        <Container disableGutters={true} >
+            <Grid container >
+                {
+                    data.map(item => (
+                        <Grid item xs >
+                            <Box margin={2} position="relative" >
+                                <Paper elevation={1}>
+                                    <Box textAlign="center" padding={2} >
+                                        <Typography>{item}</Typography>
+                                    </Box>
+                                </Paper>
+                                <Box position="absolute" 
+                                    textAlign="center" 
+                                    color="white" 
+                                    borderRadius="0px 0px 0px 3px"
+                                    style={{cursor:"pointer"}}
+                                    fontWeight={700} height={20} width={20} bgcolor="red"  right={0} top={0} 
+                                    onClick = {() => removeItem(item) }
+                                >
+                                    X
                                 </Box>
-                            </Paper>
-                            <Box position="absolute" 
-                                 textAlign="center" 
-                                 color="white" 
-                                 borderRadius="0px 0px 0px 3px"
-                                 style={{cursor:"pointer"}}
-                                 fontWeight={700} height={20} width={20} bgcolor="red"  right={0} top={0} 
-                                 onClick = {() => removeItem(item) }
-                            >
-                                X
                             </Box>
-                        </Box>
-                    </Container>
-                ))
-            }
+                        </Grid>
+                    ))
+                }
+            </Grid>
              <Container maxWidth="xs"  >
                 <FormControl variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-password">{name.toUpperCase()}</InputLabel>
                     <OutlinedInput
                         id="newInput"
+                        multiline
+                        minRows={2}
                         type="text"
                         endAdornment={
                         <InputAdornment position="end">
@@ -62,7 +78,7 @@ export default function SingleInput({sectionName}) {
                     />
                 </FormControl>
              </Container>
-             <PositionedSnackbar position="Top-Left" text="Cannot Insert Empty Text" open={isInputEmpty} />
+             <PositionedSnackbar position="Top-Left" text={errorMessage} open={isInputEmpty} />
         </Container>
    )
 }

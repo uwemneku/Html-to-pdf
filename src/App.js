@@ -4,6 +4,7 @@ import AlertDialog from './AlertDialog'
 import ChooseTemplate from './ChooseTemplate'
 import BusinessData from './BusinessData';
 import './App.css'
+import {Route} from 'react-router-dom'
 
 
 export  const DataContext = React.createContext()
@@ -20,12 +21,21 @@ export default function App() {
                                        personalMobile: "",
                                        personalAddress: "",
                                        aboutUs:"",
-                                       triggerUpdate:false
+                                       themeColor: "black",
+                                       cage:"",
+                                       duns:"",
+                                       naics:[],
+                                       competencies:[],
+                                       differentiators:[],
+                                       customers:[],
+                                       triggerUpdate:false,
+                                       documentUrl:null
                                      })
     return (
         <Container>
             <DataContext.Provider value={[data, setData]} >
-                 <BusinessData />
+                <Route exact path="/" component={ChooseTemplate} />
+                <Route exact path="/template1" component={BusinessData} />
             </DataContext.Provider>
             {/* <ChooseTemplate /> */}
         </Container>

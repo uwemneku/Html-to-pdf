@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     // border: "2px solid rgba(0, 0, 0, 0.233)",
     padding:20,
+    paddingHorizontal:40,
     width: '100vw',
   },
   section: {
@@ -67,26 +68,46 @@ const MyDocument = ({data}) => (
           <Text style={{fontSize:12, fontFamily:"Regular"}}>{data.businessName}</Text>
           <Text style={{fontSize:30, fontFamily: 'Heavy'}} >Capability Statement</Text>
           <View style={{flexDirection:"row"}} >
-              <Text style={{fontSize:12, fontFamily:"Medium", paddingHorizontal:5}}>CAGE</Text>
-              <Text style={{fontSize:12, fontFamily:"Medium", paddingHorizontal:5}}>DUNS</Text>
+              <View style={{flexDirection:"row"}} >
+                <Text style={{fontSize:12, fontFamily:"Heavy", paddingHorizontal:5}}>CAGE:</Text>
+                <Text style={{fontSize:12, fontFamily:"Medium", }}>{ data.cage}</Text>
+              </View>
+              <View style={{flexDirection:"row"}} >
+                <Text style={{fontSize:12, fontFamily:"Heavy", paddingHorizontal:5}}>DUNS:</Text>
+                <Text style={{fontSize:12, fontFamily:"Medium"}}>{ data.duns}</Text>
+              </View>
+              {/* <Text style={{fontSize:12, fontFamily:"Heavy", paddingHorizontal:5}}>CAGE: { data.cage}</Text> */}
+              {/* <Text style={{fontSize:12, fontFamily:"Heavy", paddingHorizontal:5}}>DUNS: { data.duns}</Text> */}
           </View>
         </View>
       </View>
 
       <View  >
-          <SectionHeading text="ABOUT US" />
-          <View style={{minHeight:"10vh"}}>
-
+          <SectionHeading data={data} text="ABOUT US" />
+          <View style={{minHeight:"10vh", paddingVertical:10, marginBottom:10}}>
+            <Text style={{fontSize:14, fontFamily:"Regular"}} >
+              {data.aboutUs}
+            </Text>
           </View>
       </View>
 
-      <View style={{flexDirection:"row" , minHeight:"30vh", }} >
+      <View style={{flexDirection:"row" , minHeight:"25vh", }} >
 
         <View style={{flex:1, marginRight:10 }}>
-          <SectionHeading text="CORE COMPETENCIES" />
-        </View>
+          <SectionHeading data={data} text="CORE COMPETENCIES" />
+          <View style={{paddingVertical:10}} >
+            {
+                data.competencies.map(item => <BulletPoint key={item} full text={item} /> )
+            }
+          </View>
+        </View  >
         <View style={{flex:1}}>
-          <SectionHeading text="DIFFERENTIATORS" />
+          <SectionHeading data={data} text="DIFFERENTIATORS" />
+          <View style={{paddingVertical:10}}  >
+            {
+                data.differentiators.map(item => <BulletPoint key={item} full text={item} /> )
+            }
+          </View>
         </View>
 
       </View>
@@ -94,25 +115,40 @@ const MyDocument = ({data}) => (
      
       <View style={{flexDirection:"row"}} >
        <View style={{flexDirection:"column", flex:1, marginRight:10 }}>
-          <View style={{minHeight:"20vh"}}>
-            <SectionHeading text="POINT OF CONTACT" />
-            <View style={{padding:5}} >
-              <Text style={{marginVertical:6, fontSize:16}}>{data.personalAddress}</Text>
-              <Text style={{marginVertical:6, fontSize:16}}>{data.personalMobile}</Text>
-              <Text style={{marginVertical:6, fontSize:16}}>{data.personalEmail}</Text>
+          <View style={{minHeight:"25vh"}}>
+            <SectionHeading data={data} text="POINT OF CONTACT" />
+            <View style={{padding:5, paddingLeft:8}} >
+              <Text style={{marginVertical:4, fontSize:14}}>{data.personalName}</Text>
+              <Text style={{marginVertical:4, fontSize:14}}>{data.personalAddress}</Text>
+              <Text style={{marginVertical:4, fontSize:14}}>{data.personalMobile}</Text>
+              <Text style={{marginVertical:4, fontSize:14}}>{data.personalEmail}</Text>
            </View>
           </View>
           <View style={{}}>
-            <SectionHeading text="PAST PERFORMANCE" />
+            <SectionHeading data={data} text="PAST PERFORMANCE" />
           </View>
        </View>
 
         <View style={{flex:1}}>
-          <SectionHeading text="CORPORATE DATA" />
-          <View style={{padding:5}} >
-            <Text style={{marginVertical:6, fontSize:16}}>{data.businessAddress}</Text>
-            <Text style={{marginVertical:6, fontSize:16}}>{data.businessMobile}</Text>
-            <Text style={{marginVertical:6, fontSize:16}}>{data.businessEmail}</Text>
+          <SectionHeading data={data} text="CORPORATE DATA" />
+          <View style={{padding:5, paddingLeft:8}} >
+            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessAddress}</Text>
+            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessMobile}</Text>
+            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessEmail}</Text>
+            <View style={{height:20}} />
+            <View style={{flexDirection:"row"}} >
+              <Text style={{fontSize:14, fontFamily:"Heavy", paddingHorizontal:5}}>CAGE:</Text>
+              <Text style={{fontSize:14, fontFamily:"Regular", paddingHorizontal:5}}>{ data.cage}</Text>
+            </View>
+            <View style={{flexDirection:"row"}} >
+              <Text style={{fontSize:14, fontFamily:"Heavy", paddingHorizontal:5}}>DUNS:</Text>
+              <Text style={{fontSize:14, fontFamily:"Regular", paddingHorizontal:5}}>{ data.duns}</Text>
+            </View>
+            <View style={{height:20}} />
+            <Text style={{fontSize:14, fontFamily:"Heavy", paddingHorizontal:5}}>NAICS Codes</Text>
+            {
+              data.naics.map(item => <Text style={{fontSize:14, fontFamily:"Regular", paddingHorizontal:5}}>{item}</Text>)
+            }
           </View>
         </View>
 
@@ -124,10 +160,10 @@ const MyDocument = ({data}) => (
 );
 
 
-const BulletPoint = ({full}) => (
-  <View style={{flexDirection:"row", width:full?"100%":"50%", alignItems:"flex-start", paddingVertical:3}} >
+const BulletPoint = ({full, text}) => (
+  <View style={{marginLeft:8, flexDirection:"row", width:full?"100%":"50%", alignItems:"flex-start", paddingVertical:3}} >
       <View style={{width: 5, height: 5, marginTop:5, borderRadius:100, backgroundColor:"black"}} />
-      <Text style={{paddingHorizontal:10, fontSize:14, textAnchor:"start"}} >T Test DocumnetT Test DocumnetT </Text>
+      <Text style={{fontSize:14, fontFamily:"Regular", marginLeft:8}} >{text} </Text>
   </View>
 )
 
@@ -149,10 +185,10 @@ const BulletPointGroup = ({data, full}) => (
   // </View>
 )
 
-const SectionHeading = ({text}) => {
+const SectionHeading = ({text, data}) => {
   return(
-    <View style={{flexDirection:"row", borderBottom:"2pt solid #070707"}} >
-        <Text style={{backgroundColor:"#070707", padding:2, fontFamily:"Medium", fontSize:18, color:"white"}} >{text}</Text>
+    <View style={{flexDirection:"row", borderBottom:`2pt solid ${data.themeColor || "#070707"}`}} >
+        <Text style={{backgroundColor: data.themeColor || "#070707", padding:4, fontFamily:"Medium", fontSize:18, color:"white"}} >{text}</Text>
     </View>
   )
 }

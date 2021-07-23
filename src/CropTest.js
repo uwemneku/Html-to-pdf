@@ -110,9 +110,6 @@ class CropTest extends PureComponent {
                         className="w-2/3"
                     />
                 </div>
-                <div>
-                    <button className="p-5 bg-blue-500 text-white" >Done</button>
-                </div>
             </div>
             )}
 

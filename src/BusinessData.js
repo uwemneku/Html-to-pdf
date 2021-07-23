@@ -1,20 +1,17 @@
-import { Box,  Button,  TextField, Typography } from '@material-ui/core'
-import React, {useState, useEffect, useContext, useCallback} from 'react'
+import { Box,  Button,  Fab,  Paper,  Typography } from '@material-ui/core'
+import React, {useState, useEffect, useContext} from 'react'
 import { Grid, Hidden } from '@material-ui/core';
 import HorizontalLinearStepper from './HorizontalLinearStepper';
-import { pdf,  usePDF } from '@react-pdf/renderer';
+import { usePDF } from '@react-pdf/renderer';
 import Quixote from './react-pdf/PdfMaker'
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import print from "print-js"
 import './App.css'
 import 'react-image-crop/dist/ReactCrop.css';
-import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SingleInput from './SingleInput';
 import AlertDialog from './AlertDialog';
 import {DataContext} from './App.js'
-import CropTest from './CropTest';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
             top:"0px",
             left:"0px"
         }
+    },
+    fab:{
+        position:"fixed",
+        bottom:30,
+        right:30
     }
   }));
 
@@ -44,74 +46,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-// const  getStepContent = [
-//                     <BusinessDetails />,
-//                     <PersonalDetails />
-//                     ,
-
-//                     <Container maxWidth="sm">
-//                         <Box display="flex" flexDirection="column"  >
-//                             <TextField label="About" variant="outlined" multiline minRows={3} />
-//                         </Box>
-//                     </Container>,
-
-//                     <Container maxWidth="xs">
-//                         <Box display="flex" flexDirection="column"  >
-//                             <SingleInput key="Core Competencies" sectionName={"about"} />
-//                         </Box>
-//                     </Container>,
-
-//                     <Container maxWidth="xs">
-//                         <Box display="flex" flexDirection="column"  >
-//                             <SingleInput key="Differntiators" sectionName={"about"} />
-//                         </Box>
-//                     </Container>
-// ]
-// function getStepContent(step) {
-//     switch (step) {
-//       case 0:
-//         return (
-//                     <BusinessDetails />
-//                 );
-//       case 1:
-//         return (
-//                     <Container maxWidth="xs">
-//                         <Box display="flex" flexDirection="column"  >
-//                             <TextField key="personalName" label="Name" variant="outlined" />
-//                             <TextField key="personalEmail" label="Personal Email" variant="outlined" />
-//                             <TextField key="personalMobile" label="Personal Mobile" variant="outlined" />
-//                             <TextField key="personalAddress" label="Personal Address" variant="outlined" />
-//                         </Box>
-//                     </Container>
-//                 );
-//       case 2:
-//         return (
-//                     <Container maxWidth="sm">
-//                         <Box display="flex" flexDirection="column"  >
-//                             <TextField label="About" variant="outlined" multiline minRows={3} />
-//                         </Box>
-//                     </Container>
-//                 );
-//       case 3:
-//         return (
-//                     <Container maxWidth="xs">
-//                         <Box display="flex" flexDirection="column"  >
-//                             <SingleInput key="Core Competencies" sectionName={"about"} />
-//                         </Box>
-//                     </Container>
-//                 );
-//       case 4:
-//         return (
-//                     <Container maxWidth="xs">
-//                         <Box display="flex" flexDirection="column"  >
-//                             <SingleInput key="Differntiators" sectionName={"about"} />
-//                         </Box>
-//                     </Container>
-//                 );
-//       default:
-//         return 'Unknown step';
-//     }
-//   }
 
 export default function BusinessData() {
     const classes = useStyles()
@@ -121,9 +55,6 @@ export default function BusinessData() {
   
   
 
-  const handleIput = (e) => {
-    settexx(e.target.value)
-  }
   
  
   
@@ -136,11 +67,11 @@ export default function BusinessData() {
                     <Grid item>
                         <Typography variant="h6">
                             <Box textAlign="center" fontWeight="bold" >
-                                Coperate Data
+                                {/* Coperate Data */}
                             </Box>
                         </Typography>
                     </Grid>
-                    <Grid item>
+                    <Grid style={{marginTop:"50px", marginBottom:"100px"}}  item>
                         <HorizontalLinearStepper  />
                     </Grid>
                 </Grid>
@@ -150,7 +81,12 @@ export default function BusinessData() {
                             <GeneratedPdf data={data}/>
                         </Hidden>
                         <Hidden mdUp >
-                            {/* <AlertDialog text="View Pdf" content={<GeneratedPdf/>} /> */}
+                        <Fab className={classes.fab} color="primary" variant="extended">
+                            Preview pdf
+                            <Box position="absolute" style={{opacity:0}} >
+                                <AlertDialog fullScreen text="View Pdf" content={<GeneratedPdf  data={data}/>} />
+                            </Box>
+                        </Fab>
                         </Hidden>
                     </Grid>
             
@@ -163,8 +99,9 @@ export default function BusinessData() {
 
 
 
-const GeneratedPdf  = ({data}) => {
+export const GeneratedPdf  = () => {
     const [texx, settexx] = useState("")
+    const [data, setData] = useContext(DataContext)
     const {triggerUpdate} = data
     const Doc = < Quixote data={data} /> 
     const [instance, updateInstance] = usePDF({ document: Doc });
@@ -179,18 +116,42 @@ const GeneratedPdf  = ({data}) => {
         const mockLoading = setTimeout(() => {
             setIsLoading(false)
         }, 1500);
+        setData({...data, documentUrl:instance.url})
+        console.log(data.documentUrl)
 
         return () => {
             clearInterval(mockLoading)
             setIsLoading(true)
         }
-    }, [triggerUpdate])
+    }, [triggerUpdate, instance.url])
+   
     useEffect(updateInstance, [triggerUpdate]);
     
   
     
     return(
         <Box  height="100vh" width="100%" maxWidth="100%" padding={3} boxSizing="border-box" position="relative"   maxHeight="100vh" overflow="auto" >
+                    <Box display="flex" marginBottom="20px" zIndex={20} >
+                        {
+                            ["red", "blue", "green", "orange", "purple", "black"].map(item => < SelectColor key={item} color= {item} />)
+
+                        }
+                        <Hidden mdDown >
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                style={{marginLeft:"auto"}}
+                                    onClick={() =>{
+                                        print(instance.url);
+                                        }}
+                                >
+                                    {
+                                        instance.loading ? 'Loading document...' : 'Print now!'
+                                    }
+                            </Button>
+                        </Hidden>
+                        
+                    </Box>
             {
                 isLoading ?
                 <Box bgcolor="red" width="100%" height="100%" className="pulse" >
@@ -198,29 +159,41 @@ const GeneratedPdf  = ({data}) => {
                 </Box>
                 :
                 <Box>
-                    <Document
-                        file={instance.url}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        on
-                    >
-                    <   Page pageNumber={pageNumber} />
-
-                        <p>Page {pageNumber} of {numPages}</p> 
-                        {/* <Box position="absolute"  bottom="0px" > */}
-                        <Button
-                            onClick={() =>{
-                                print(instance.url);
-                                }}
+                    <Paper elevation={2}>
+                        <Document
+                            file={instance.url}
+                            onLoadSuccess={onDocumentLoadSuccess}
+                            on
                         >
-                            {
-                                instance.loading ? 'Loading document...' : 'Print now!'
-                            }
-                        </Button>
-                        {/* </Box> */}
-                    </Document>
+                        <   Page pageNumber={pageNumber} />
+                        </Document>
+                    </Paper>
+
+                            <p>Page {pageNumber} of {numPages}</p> 
                 </Box>
             }
         </Box>
 
+    )
+}
+
+const SelectColor = ({color}) => {
+    const [data, setData] = useContext(DataContext)
+    
+    const updateColor = 
+        () => {
+            setData(prev => {
+                const trig = prev.triggerUpdate
+                                return {...prev, themeColor:color, triggerUpdate:!trig }
+            })
+        }
+    return (
+        <Box width="30px" height="30px" marginBottom="10px" marginRight="5px" onClick={updateColor}  >
+            <Paper elevation={2} style={{backgroundColor:color}}  >
+                <Box padding="20px"  width="100%" height="100%"  >
+                
+                </Box>
+            </Paper>
+        </Box>
     )
 }
