@@ -128,9 +128,7 @@ export default function HorizontalLinearStepper({documentUrl}) {
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished
             </Typography>
-            <Hidden mdUp>
-              <GeneratedPdf  data={data}/>
-            </Hidden>
+           
             <Button
                 variant="outlined"
                 color="primary"
@@ -171,6 +169,9 @@ export default function HorizontalLinearStepper({documentUrl}) {
                         "Print document"
                       }
               </Button>
+            </Hidden>
+            <Hidden mdUp>
+              <GeneratedPdf  data={data}/>
             </Hidden>
            
           </div>
