@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import {Box, Container, Grid, Modal} from "@material-ui/core"
 import AlertDialog from './AlertDialog'
 import ChooseTemplate from './ChooseTemplate'
-import BusinessData from './BusinessData';
+// import BusinessData from './BusinessData';
 import './App.css'
-import {Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
+import { Suspense } from 'react'
+import Preloader from './Preloader'
 
 
 export  const DataContext = React.createContext()
+const BusinessData = React.lazy(() => import('./BusinessData'));
 
 export default function App() {
     // const [logoUrl, setLogoUrl] = useState(null)
@@ -32,12 +35,16 @@ export default function App() {
                                        documentUrl:null
                                      })
     return (
-        <Container>
+        <Box>
             <DataContext.Provider value={[data, setData]} >
-                <Route exact path="/" component={ChooseTemplate} />
-                <Route exact path="/template1" component={BusinessData} />
+             <Suspense fallback={<Preloader />}>
+                 <Switch>
+                    <Route exact path="/" component={ChooseTemplate} />
+                    <Route exact path="/template1" component={BusinessData} />
+                 </Switch>
+              </Suspense>  
             </DataContext.Provider>
             {/* <ChooseTemplate /> */}
-        </Container>
+        </Box>
     )
 }
