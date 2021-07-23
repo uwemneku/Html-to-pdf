@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import BusinessDetails from './formdetails/BusinessDetails';
+import PersonalDetails from './formdetails/PersonalDetails';
+import { DataContext } from './App';
+import AboutUs from './formdetails/AboutUs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,27 +27,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['', ''];
+  return ['', '', "", '', ''];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Select campaign settings...';
-    case 1:
-      return 'What is an ad group anyways?';
-    case 2:
-      return 'This is the bit I really care about!';
-    default:
-      return 'Unknown step';
-  }
-}
-
-export default function HorizontalLinearStepper({getStepContent}) {
+export default function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [data, setData] = useContext(DataContext)
   const steps = getSteps();
+ const getStepContent = [<BusinessDetails setData={setData} />, <PersonalDetails setData={setData} />,  <AboutUs /> ]
+
+ const triggerDocumentUpdate = () => {
+    setData(prev => {
+      const trig = prev.triggerUpdate
+      return {...prev, triggerUpdate:!trig } 
+    })
+ }
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -54,6 +54,7 @@ export default function HorizontalLinearStepper({getStepContent}) {
   };
 
   const handleNext = () => {
+    triggerDocumentUpdate()
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -100,7 +101,7 @@ export default function HorizontalLinearStepper({getStepContent}) {
           //   stepProps.completed = false;
           // }
           return (
-            <Step key={label} {...stepProps}>
+            <Step key={index} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
             </Step>
           );
@@ -118,7 +119,7 @@ export default function HorizontalLinearStepper({getStepContent}) {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Typography className={classes.instructions}>{getStepContent[activeStep]}</Typography>
             <div>
               <Button variant="outlined" disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back

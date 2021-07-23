@@ -10,7 +10,7 @@ class CropTest extends PureComponent {
     crop: {
       unit: '%',
       width: 30,
-      aspect: 1 / 1,
+      aspect: 8.5 / 3,
     },
   };
 
@@ -46,7 +46,11 @@ class CropTest extends PureComponent {
         crop,
         'newFile.jpeg'
       );
-    //   this.props.croppedImageUrl(croppedImageUrl);
+      this.props.croppedImageUrl(prev => {
+                                const trig = prev.triggerUpdate
+                                return {...prev, logoUrl:croppedImageUrl, triggerUpdate:!trig }
+                              } )
+
     }
   }
 

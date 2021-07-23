@@ -12,6 +12,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.pulse {
+  animation: pulse infinite 0.5s ease-in-out alternate;
+}
 
 .App-header {
   background-color: #282c34;
@@ -25,16 +28,15 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #070707;
 }
 
-@keyframes App-logo-spin {
+@keyframes pulse {
   from {
-    transform: rotate(0deg);
+    background-color: white;
   }
   to {
-    transform: rotate(360deg);
-    color: #1f2125;
+    background-color: skyblue;
   }
 }
 canvas{
