@@ -1,17 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext,  useState } from 'react'
 import { Box, Grid, Container, Paper, Avatar } from '@material-ui/core';
-import AlertDialog from '../AlertDialog';
-import CropTest from '../CropTest';
+import AlertDialog from '../components/AlertDialog';
+import CropTest from '../components/CropImage';
 import { DataContext } from '../App';
-import PositionedSnackbar from '../PositionedSnackbar';
+import PositionedSnackbar from '../components/PositionedSnackbar';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(theme => ({
+    removeIcon:{
+        position:"absolute",
+        right:0,
+        top:0,
+        fontWeight: 700,
+        height: 20,
+        width: 20,
+        borderRadius:"0px 0px 0px 3px",
+        textAlign:"center",
+        color:"white",
+        cursor: "pointer",
+        backgroundColor: "red",
 
-export default function Partners() {
+    }
+}))
+
+/**
+ * This componet handle partner image upload
+ */
+function Partners() {
     const [data, setData] = useContext(DataContext)
     const {partnersImage} = data
-    const [imageUrl, setImageUrl] = useState(null)
-    const [openSnack, setOpenSnack] = useState(false)
+    const [imageUrl, setImageUrl] = useState(null)      
+    const [openSnack, setOpenSnack] = useState(false)   // State to manage snack notification
+    const  classes = useStyles()
 
+    /** This function adds an image to the partner list and triggers the documnet update*/
     const pushImageToList = () => {
         if(partnersImage.length >= 3){
             setOpenSnack(true)
@@ -24,6 +46,7 @@ export default function Partners() {
         }
     }
 
+    /** Removes an image url from partnersImage state */
     const removeImage = (url) => {
         setData({...data, partnersImage:partnersImage.filter(i => i !== url), triggerUpdate:!data.triggerUpdate })   
     }
@@ -31,27 +54,19 @@ export default function Partners() {
    
     return (
         <Container disableGutters={true} >
-            <Grid container direction="row" justifyContent="center" alignItems="center" >
+            <Grid container direction="row" 
+                  justifyContent="center" 
+                  alignItems="center" >
                 {
                     partnersImage.map(item => (
                         <Grid item  >
                             <Box width="fit-content" margin={2} position="relative" >
                                 <Paper elevation={1}>
                                     <Box textAlign="center" padding={2} >
-                                        {
-                                            (partnersImage.length > 0) &&
                                             <Avatar style={{width:60, height:60}} src={item} />
-                                        }
                                     </Box>
                                 </Paper>
-                                <Box position="absolute" 
-                                    textAlign="center" 
-                                    color="white" 
-                                    borderRadius="0px 0px 0px 3px"
-                                    style={{cursor:"pointer"}}
-                                    fontWeight={700} height={20} width={20} bgcolor="red"  right={0} top={0} 
-                                    onClick = {() => removeImage(item) }
-                                >
+                                <Box className={classes.removeIcon} onClick = {() => removeImage(item) }>
                                     X
                                 </Box>
                             </Box>
@@ -60,10 +75,17 @@ export default function Partners() {
                 }
             </Grid>
              <Container maxWidth="xs"  >
-                <AlertDialog keepMounted={false} onClose={pushImageToList} text="Upload a business partner log" content={<CropTest aspectRatio={1}  croppedImageUrl={setImageUrl}  />} />
+                <AlertDialog keepMounted={false} 
+                             onClose={pushImageToList} 
+                             text="Upload a business partner log" 
+                             content={<CropTest aspectRatio={1}  croppedImageUrl={setImageUrl}  />} 
+                />
              </Container>
-             <PositionedSnackbar position="Top-Left" text={"This template takes only three images"} open={openSnack} />
+             <PositionedSnackbar position="Top-Left"  
+                                 text={"This template takes only three images"} 
+                                 open={openSnack} />
         </Container>
    )
 }
 
+export default Partners;

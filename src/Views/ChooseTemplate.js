@@ -1,7 +1,7 @@
 import { Box, Grid, Paper, Typography } from '@material-ui/core'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {one, two, three, four} from './media'
+import {one, two, three, four} from '../media'
 
 export default function ChooseTemplate() {
     return (

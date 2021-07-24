@@ -1,8 +1,6 @@
-import React, {useCallback, useEffect, useContext} from 'react'
+import React, { useEffect, useContext} from 'react'
 import { DataContext } from './../App';
 import { Box, Container, TextField } from '@material-ui/core';
-import CropTest from '../CropTest';
-import AlertDialog from '../AlertDialog';
 
 const inputFields = [
                         {

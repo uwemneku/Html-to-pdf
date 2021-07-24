@@ -1,7 +1,5 @@
 import React from 'react';
 import { Page, Text, View, Document, Image, StyleSheet, Font } from '@react-pdf/renderer';
-import faker from 'faker'
-import testLogo from '../log.jpg'
 import robotoBlack from '../font/Roboto-Black.ttf'
 import robotoLight from '../font/Roboto-Light.ttf'
 import robotoMedium from '../font/Roboto-Medium.ttf'
@@ -52,7 +50,6 @@ Font.register({
 
 
 // Create Document Component
-const about = faker.lorem.sentences(4);
 const MyDocument = ({data}) => (
     
   <Document>
@@ -194,7 +191,6 @@ const BulletPointGroup = ({data, full}) => (
       ))
     }
     </View>
-  // </View>
 )
 
 const SectionHeading = ({text, data}) => {
@@ -205,4 +201,64 @@ const SectionHeading = ({text, data}) => {
   )
 }
 
-export default MyDocument;
+//A function that checks if two arrays are equal
+function arraysEqual(oldArr, newArray) {
+  const test = new Set([...oldArr, ...newArray])
+  return test.size === oldArr.length
+}
+
+function areEqual (prevProps, nextProps){
+  if (prevProps.data.cage !== nextProps.data.cage) {
+    return false;
+  }
+  if (prevProps.data.duns !== nextProps.data.duns) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.naics, nextProps.data.naics)) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.partnersImage, nextProps.data.partnersImage)) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.competencies, nextProps.data.competencies)) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.differentiators, nextProps.data.differentiators)) {
+    return false;
+  }
+  if (prevProps.data.logoUrl !== nextProps.data.logoUrl) {
+    return false;
+  }
+  if (prevProps.data.aboutUs !== nextProps.data.aboutUs) {
+    return false;
+  }
+  if (prevProps.data.themeColor !== nextProps.data.themeColor) {
+    return false;
+  }
+  if (prevProps.data.personalName !== nextProps.data.personalName) {
+    return false;
+  }
+  if (prevProps.data.personalAddress !== nextProps.data.personalAddress) {
+    return false;
+  }
+  if (prevProps.data.personalMobile !== nextProps.data.personalMobile) {
+    return false;
+  }
+  if (prevProps.data.personalEmail !== nextProps.data.personalEmail) {
+    return false;
+  }
+  if (prevProps.data.businessAddress !== nextProps.data.businessAddress) {
+    return false;
+  }
+  if (prevProps.data.businessMobile !== nextProps.data.businessMobile) {
+    return false;
+  }
+  if (prevProps.data.businessEmail !== nextProps.data.businessEmail) {
+    return false;
+  }
+  return true;
+}
+
+
+
+export default React.memo(MyDocument, areEqual);

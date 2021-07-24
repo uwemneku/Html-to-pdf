@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import {Box, Container, Grid, Modal} from "@material-ui/core"
-import AlertDialog from './AlertDialog'
-import ChooseTemplate from './ChooseTemplate'
-// import BusinessData from './BusinessData';
+import {Box} from "@material-ui/core"
+import ChooseTemplate from './Views/ChooseTemplate'
 import './App.css'
 import {Route, Switch} from 'react-router-dom'
 import { Suspense } from 'react'
-import Preloader from './Preloader'
+import Preloader from './components/Preloader'
 
 
 export  const DataContext = React.createContext()
-const BusinessData = React.lazy(() => import('./BusinessData'));
+const CreatePdf = React.lazy(() => import('./Views/CreatePdf'));
 
 export default function App() {
     // const [logoUrl, setLogoUrl] = useState(null)
@@ -40,7 +38,7 @@ export default function App() {
              <Suspense fallback={<Preloader />}>
                  <Switch>
                     <Route exact path="/" component={ChooseTemplate} />
-                    <Route exact path="/template1" component={BusinessData} />
+                    <Route exact path="/template1" component={CreatePdf} />
                  </Switch>
               </Suspense>  
             </DataContext.Provider>
