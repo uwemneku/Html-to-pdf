@@ -1,7 +1,7 @@
 import { Box, Container } from '@material-ui/core'
 import React, { useContext } from 'react'
 import { DataContext } from '../App'
-import SingleInput from '../SingleInput'
+import SingleInput from '../components/SingleInput'
 
 export default function List({sectionName, sectionData}) {
     const [data, setData] = useContext(DataContext);

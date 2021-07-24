@@ -1,9 +1,12 @@
 import React, { useEffect, useContext, useState} from 'react'
 import { DataContext } from './../App';
 import { Box, Container, TextField } from '@material-ui/core';
-import CropTest from '../CropTest';
-import AlertDialog from '../AlertDialog';
+import CropTest from '../components/CropImage';
+import AlertDialog from '../components/AlertDialog';
+import updateSateObject from '../Helpers/updateSateObject';
+import usePdfRerender from '../Hooks/usePdfRerender';
 
+/** This array contains all the data to be obtained the id is same as the the state where the values will be stored*/
 const inputFields = [
                         {
                             id: "businessName",
@@ -33,18 +36,13 @@ const inputFields = [
 
 const BusinessDetails = () => {
     const [data, setData] = useContext(DataContext)
-    const [imageUrl, setImageUrl] = useState(null)
+    const [imageUrl, setImageUrl] = useState(null)  // This state stores the logo url
+    const triggerPdfRerender = usePdfRerender()
     
-    const updateDate = 
-        (e, name) => {
-            setData({...data, [name]:e.target.value})
-        }
-    
+    //Update the logoUrl state and trigger pdf rerender to show image
     useEffect(() => {
-        setData(prev => {
-            const trig = prev.triggerUpdate
-            return {...prev, logoUrl:imageUrl, triggerUpdate:!trig }
-          } )
+        updateSateObject(imageUrl, "logoUrl", setData)
+        triggerPdfRerender();
     }, [imageUrl])
     
       return(
@@ -52,11 +50,16 @@ const BusinessDetails = () => {
               <Box display="flex" flexDirection="column"  >
                   {
                       inputFields.map(item => 
-                          <TextField onChange={(e) => updateDate(e, item.id)} key={item.id}  label={item.label} variant="outlined" value={data[item.id]} />
+                          <TextField onChange={(e) => updateSateObject(e.target.value, item.id, setData)}
+                                     key={item.id}  variant="outlined"
+                                     label={item.label}  value={data[item.id]}
+                          />
                       )
                   }
                   <Box display="flex" marginTop={2} marginBottom={2}>
-                      <AlertDialog text={data.logoUrl ?"Change Business Logo" : "Upload business Logo"} content={<CropTest aspectRatio={1}  croppedImageUrl={setImageUrl} />} />
+                      <AlertDialog text={data.logoUrl ?"Change Business Logo" : "Upload business Logo"} 
+                                   content={<CropTest aspectRatio={1}  croppedImageUrl={setImageUrl} />} 
+                      />
                   </Box>
               </Box>
            </Container>
