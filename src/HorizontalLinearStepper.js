@@ -13,6 +13,7 @@ import List from './formdetails/List';
 import  print  from 'print-js';
 import { GeneratedPdf } from './BusinessData';
 import { Hidden } from '@material-ui/core';
+import Partners from './formdetails/Partners';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['', '', "", '', '', ""];
+  return ['', '', "", '', '', "", "" ];
 }
 
 export default function HorizontalLinearStepper({documentUrl}) {
@@ -46,7 +47,9 @@ export default function HorizontalLinearStepper({documentUrl}) {
                          <AboutUs />, 
                          <List sectionData={competencies} sectionName="competencies" />, 
                          <List sectionData={differentiators} sectionName="differentiators"  />, 
-                         <List sectionData={naics} sectionName="naics"  /> ]
+                         <List sectionData={naics} sectionName="naics"  />,
+                         <Partners />
+                        ]
 
  const triggerDocumentUpdate = () => {
     setData(prev => {
@@ -103,6 +106,11 @@ export default function HorizontalLinearStepper({documentUrl}) {
     setActiveStep(0);
   };
 
+  const handleStepperClick = (index) => {
+    setActiveStep(index)
+    triggerDocumentUpdate()
+  }
+
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep}>
@@ -116,7 +124,7 @@ export default function HorizontalLinearStepper({documentUrl}) {
           //   stepProps.completed = false;
           // }
           return (
-            <Step key={index} {...stepProps}>
+            <Step onClick={()=>handleStepperClick(index)} key={index} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
             </Step>
           );

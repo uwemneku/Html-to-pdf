@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useContext} from 'react'
+import React, { useEffect, useContext, useState} from 'react'
 import { DataContext } from './../App';
 import { Box, Container, TextField } from '@material-ui/core';
 import CropTest from '../CropTest';
@@ -33,6 +33,7 @@ const inputFields = [
 
 const BusinessDetails = () => {
     const [data, setData] = useContext(DataContext)
+    const [imageUrl, setImageUrl] = useState(null)
     
     const updateDate = 
         (e, name) => {
@@ -40,8 +41,12 @@ const BusinessDetails = () => {
         }
     
     useEffect(() => {
-        console.log(data.businessName)
-    })
+        setData(prev => {
+            const trig = prev.triggerUpdate
+            return {...prev, logoUrl:imageUrl, triggerUpdate:!trig }
+          } )
+    }, [imageUrl])
+    
       return(
           <Container maxWidth="xs">
               <Box display="flex" flexDirection="column"  >
@@ -51,7 +56,7 @@ const BusinessDetails = () => {
                       )
                   }
                   <Box display="flex" marginTop={2} marginBottom={2}>
-                      <AlertDialog text={data.logoUrl ?"Change Business Logo" : "Upload business Logo"} content={<CropTest croppedImageUrl={setData} />} />
+                      <AlertDialog text={data.logoUrl ?"Change Business Logo" : "Upload business Logo"} content={<CropTest aspectRatio={1}  croppedImageUrl={setImageUrl} />} />
                   </Box>
               </Box>
            </Container>

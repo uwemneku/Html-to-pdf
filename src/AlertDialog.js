@@ -5,10 +5,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import CropTest from './CropTest';
-import { DataContext } from './App';
 
-export default function AlertDialog({text, content, heading, fullScreen}) {
+export default function AlertDialog({text, content, heading, fullScreen, onClose, keepMounted=true}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -31,7 +29,7 @@ export default function AlertDialog({text, content, heading, fullScreen}) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        keepMounted={true}
+        keepMounted={keepMounted}
         fullScreen={fullScreen}
       >
         <DialogTitle id="alert-dialog-title">{heading}</DialogTitle>
@@ -44,7 +42,15 @@ export default function AlertDialog({text, content, heading, fullScreen}) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={()=>{
+                handleClose()
+                try {
+                  onClose()
+                } catch (e) {
+                  // console.log("On close function was not provided for the alert dialog")
+                }
+              }} 
+            color="primary" autoFocus>
             Done
           </Button>
         </DialogActions>

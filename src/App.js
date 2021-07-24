@@ -30,7 +30,7 @@ export default function App() {
                                        naics:[],
                                        competencies:[],
                                        differentiators:[],
-                                       customers:[],
+                                       partnersImage:[],
                                        triggerUpdate:false,
                                        documentUrl:null
                                      })

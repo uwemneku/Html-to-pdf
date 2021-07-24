@@ -60,7 +60,7 @@ const MyDocument = ({data}) => (
       <View style={{flexDirection:"row", marginVertical:5, overflow:"hidden", minHeight:"10vh",}} >
         {
           data.logoUrl &&
-                      <View style={{maxWidth:150, flexDirection:"row", alignItems:"center" }} >
+                      <View style={{maxWidth:150, maxHeight:100, flexDirection:"row", alignItems:"center" }} >
                           <Image source={data.logoUrl} style={{width: "100%",  objectFit:"cover"}} />
                       </View>
         }
@@ -126,6 +126,18 @@ const MyDocument = ({data}) => (
           </View>
           <View style={{}}>
             <SectionHeading data={data} text="PAST PERFORMANCE" />
+              {
+                (data.partnersImage.length > 0) &&
+                    <View style={{flexDirection:"row", justifyContent:"flex-start", marginTop:5}} >
+                      {
+                        data.partnersImage.map(image => (
+                          <View style={{width:80, marginHorizontal:5, maxHeight:80, borderRadius:500, overflow:"hidden", flexDirection:"row", alignItems:"center" }} >
+                              <Image source={image} style={{width: "100%",  objectFit:"cover"}} />
+                          </View>
+                        ))
+                      }
+                    </View>
+            }
           </View>
        </View>
 

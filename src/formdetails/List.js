@@ -5,7 +5,6 @@ import SingleInput from '../SingleInput'
 
 export default function List({sectionName, sectionData}) {
     const [data, setData] = useContext(DataContext);
-    // const sectionName = data
     const updateData = (newData) => {
         setData({...data, [sectionName]:[...sectionData, newData] })
     }
