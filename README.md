@@ -6,7 +6,7 @@ A simple react app that creats Pdf documents without any server side code using 
 
 ## Screenshots
 
-![Preview](https://ibb.co/DfhpnW5)
+![Preview](https://i.ibb.co/d4FgyMG/Screenshot-143.png)
 
   
 ## Tech Stack
