@@ -1,22 +1,36 @@
 import React, { useState } from 'react'
 import { Button, Box, InputLabel, OutlinedInput, Typography, FormControl, InputAdornment, Grid, Container, Paper } from '@material-ui/core';
 import PositionedSnackbar from './PositionedSnackbar';
+import useGlobalStyles from '../GlobalStyles';
+import { makeStyles } from '@material-ui/core/styles';
 
+
+const useStyles = makeStyles(theme => ({
+    placeholder:{
+        fontSize: theme.typography.body2.fontSize
+    },
+    root:{
+        '& label':{
+            fontSize:"14px"
+            
+        }
+    }
+}))
 export default function SingleInput({data, updateData, removeData, name}) {
     const [errorMessage, setErrorMessage] = useState("")
+    const global = useGlobalStyles()
+    const g = useStyles()
 
     // const [bulletPoints, setBulletPoints] = useState(["testing one date"]) 
     const [isInputEmpty, setIsInputEmpty ]= useState(false)
     const addItem = () => {
-        const value = document.getElementById("newInput").value
+        const value = document.getElementById(name).value
         if(data.includes(value)){
-
             showAlert("You've added this to the list")
-            
         }
         else if(value.length > 2)
         {  updateData(value)
-            document.getElementById("newInput").value = ""
+            document.getElementById(name).value = ""
         }
         else{
             showAlert("Cannot Insert Empty Text")
@@ -34,7 +48,7 @@ export default function SingleInput({data, updateData, removeData, name}) {
 
     }
     return (
-        <Container disableGutters={true} >
+        <Container  maxWidth="xs" disableGutters={true} >
             <Grid container >
                 {
                     data.map(item => (
@@ -60,23 +74,23 @@ export default function SingleInput({data, updateData, removeData, name}) {
                     ))
                 }
             </Grid>
-             <Container maxWidth="xs"  >
-                <FormControl variant="outlined">
+                <FormControl variant="outlined" className={g.root} >
                     <InputLabel htmlFor="outlined-adornment-password">{name.toUpperCase()}</InputLabel>
                     <OutlinedInput
-                        id="newInput"
+                        id={name}
                         multiline
                         minRows={2}
                         type="text"
+                        fullWidth={true}
                         endAdornment={
                         <InputAdornment position="end">
                             <Button disabled={isInputEmpty} onClick={addItem} >Add</Button>
                         </InputAdornment>
                         }
                         labelWidth={70}
+                        style={{marginBottom:"15px"}}
                     />
                 </FormControl>
-             </Container>
              <PositionedSnackbar position="Top-Left" text={errorMessage} open={isInputEmpty} />
         </Container>
    )

@@ -30,6 +30,11 @@
 .App-link {
   color: #070707;
 }
+input::placeholder {
+  color: red !important;
+  font-size: 1.2em;
+  font-style: italic;
+}
 
 @keyframes pulse {
   from {

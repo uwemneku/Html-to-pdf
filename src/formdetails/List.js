@@ -15,7 +15,7 @@ export default function List({sectionName, sectionData}) {
 
     return (
         <Container maxWidth="xs">
-            <Box display="flex" flexDirection="column"  >
+            <Box display="flex" flexDirection="column" alignItems="center"  >
                 <SingleInput name={sectionName} key={sectionName} data={sectionData} updateData={updateData} removeData={removeData} />
             </Box>
         </Container>

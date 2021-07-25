@@ -5,6 +5,8 @@ import './App.css'
 import {Route, Switch} from 'react-router-dom'
 import { Suspense } from 'react'
 import Preloader from './components/Preloader'
+import Template1 from './Templates/Template1'
+import EditHome from './EditHome'
 
 
 export  const DataContext = React.createContext()
@@ -35,14 +37,14 @@ export default function App() {
     return (
         <Box>
             <DataContext.Provider value={[data, setData]} >
-             <Suspense fallback={<Preloader />}>
+             {/* <Suspense fallback={<Preloader />}>
                  <Switch>
                     <Route exact path="/" component={ChooseTemplate} />
                     <Route exact path="/template1" component={CreatePdf} />
                  </Switch>
-              </Suspense>  
+              </Suspense>   */}
+              <EditHome/>
             </DataContext.Provider>
-            {/* <ChooseTemplate /> */}
         </Box>
     )
 }

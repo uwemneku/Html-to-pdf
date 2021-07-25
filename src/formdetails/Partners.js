@@ -59,7 +59,7 @@ function Partners() {
                   alignItems="center" >
                 {
                     partnersImage.map(item => (
-                        <Grid item  >
+                        <Grid item key={item}  >
                             <Box width="fit-content" margin={2} position="relative" >
                                 <Paper elevation={1}>
                                     <Box textAlign="center" padding={2} >
@@ -77,7 +77,7 @@ function Partners() {
              <Container maxWidth="xs"  >
                 <AlertDialog keepMounted={false} 
                              onClose={pushImageToList} 
-                             text="Upload a business partner log" 
+                             text="Upload business partner logo" 
                              content={<CropTest aspectRatio={1}  croppedImageUrl={setImageUrl}  />} 
                 />
              </Container>
