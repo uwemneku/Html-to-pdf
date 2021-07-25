@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: 'blue',
     height: "20px"
+  },
+  text:{
+    marginVertical:4,
+    fontSize:14,
+    fontFamily: "Regular",
   }
 });
 
@@ -115,10 +120,10 @@ const MyDocument = ({data}) => (
           <View style={{minHeight:"25vh"}}>
             <SectionHeading data={data} text="POINT OF CONTACT" />
             <View style={{padding:5, paddingLeft:8}} >
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalName}</Text>
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalAddress}</Text>
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalMobile}</Text>
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalEmail}</Text>
+              <Text style={styles.text}>{data.personalName}</Text>
+              <Text style={styles.text}>{data.personalAddress}</Text>
+              <Text style={styles.text}>{data.personalMobile}</Text>
+              <Text style={styles.text}>{data.personalEmail}</Text>
            </View>
           </View>
           <View style={{}}>
@@ -141,9 +146,9 @@ const MyDocument = ({data}) => (
         <View style={{flex:1}}>
           <SectionHeading data={data} text="CORPORATE DATA" />
           <View style={{padding:5, paddingLeft:8}} >
-            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessAddress}</Text>
-            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessMobile}</Text>
-            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessEmail}</Text>
+            <Text style={styles.text}>{data.businessAddress}</Text>
+            <Text style={styles.text}>{data.businessMobile}</Text>
+            <Text style={styles.text}>{data.businessEmail}</Text>
             <View style={{height:20}} />
             <View style={{flexDirection:"row"}} >
               <Text style={{fontSize:14, fontFamily:"Heavy", paddingHorizontal:5}}>CAGE:</Text>
