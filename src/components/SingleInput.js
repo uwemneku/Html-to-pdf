@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
-import { Button, TextField, Box, InputLabel, OutlinedInput, Typography, FormControl, InputAdornment, IconButton, Grid, Container, Paper } from '@material-ui/core';
+import React, { useState } from 'react'
+import { Button, Box, InputLabel, OutlinedInput, Typography, FormControl, InputAdornment, Grid, Container, Paper } from '@material-ui/core';
 import PositionedSnackbar from './PositionedSnackbar';
-import { DataContext } from '../App';
 
 export default function SingleInput({data, updateData, removeData, name}) {
     const [errorMessage, setErrorMessage] = useState("")

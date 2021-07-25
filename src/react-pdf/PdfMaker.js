@@ -1,7 +1,5 @@
 import React from 'react';
 import { Page, Text, View, Document, Image, StyleSheet, Font } from '@react-pdf/renderer';
-import faker from 'faker'
-import testLogo from '../log.jpg'
 import robotoBlack from '../font/Roboto-Black.ttf'
 import robotoLight from '../font/Roboto-Light.ttf'
 import robotoMedium from '../font/Roboto-Medium.ttf'
@@ -30,6 +28,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: 'blue',
     height: "20px"
+  },
+  text:{
+    marginVertical:4,
+    fontSize:14,
+    fontFamily: "Regular",
   }
 });
 
@@ -52,7 +55,6 @@ Font.register({
 
 
 // Create Document Component
-const about = faker.lorem.sentences(4);
 const MyDocument = ({data}) => (
     
   <Document>
@@ -118,10 +120,10 @@ const MyDocument = ({data}) => (
           <View style={{minHeight:"25vh"}}>
             <SectionHeading data={data} text="POINT OF CONTACT" />
             <View style={{padding:5, paddingLeft:8}} >
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalName}</Text>
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalAddress}</Text>
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalMobile}</Text>
-              <Text style={{marginVertical:4, fontSize:14}}>{data.personalEmail}</Text>
+              <Text style={styles.text}>{data.personalName}</Text>
+              <Text style={styles.text}>{data.personalAddress}</Text>
+              <Text style={styles.text}>{data.personalMobile}</Text>
+              <Text style={styles.text}>{data.personalEmail}</Text>
            </View>
           </View>
           <View style={{}}>
@@ -144,9 +146,9 @@ const MyDocument = ({data}) => (
         <View style={{flex:1}}>
           <SectionHeading data={data} text="CORPORATE DATA" />
           <View style={{padding:5, paddingLeft:8}} >
-            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessAddress}</Text>
-            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessMobile}</Text>
-            <Text style={{marginVertical:4, fontFamily:"Regular",  fontSize:14}}>{data.businessEmail}</Text>
+            <Text style={styles.text}>{data.businessAddress}</Text>
+            <Text style={styles.text}>{data.businessMobile}</Text>
+            <Text style={styles.text}>{data.businessEmail}</Text>
             <View style={{height:20}} />
             <View style={{flexDirection:"row"}} >
               <Text style={{fontSize:14, fontFamily:"Heavy", paddingHorizontal:5}}>CAGE:</Text>
@@ -194,7 +196,6 @@ const BulletPointGroup = ({data, full}) => (
       ))
     }
     </View>
-  // </View>
 )
 
 const SectionHeading = ({text, data}) => {
@@ -205,4 +206,64 @@ const SectionHeading = ({text, data}) => {
   )
 }
 
-export default MyDocument;
+//A function that checks if two arrays are equal
+function arraysEqual(oldArr, newArray) {
+  const test = new Set([...oldArr, ...newArray])
+  return test.size === oldArr.length
+}
+
+function areEqual (prevProps, nextProps){
+  if (prevProps.data.cage !== nextProps.data.cage) {
+    return false;
+  }
+  if (prevProps.data.duns !== nextProps.data.duns) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.naics, nextProps.data.naics)) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.partnersImage, nextProps.data.partnersImage)) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.competencies, nextProps.data.competencies)) {
+    return false;
+  }
+  if (!arraysEqual(prevProps.data.differentiators, nextProps.data.differentiators)) {
+    return false;
+  }
+  if (prevProps.data.logoUrl !== nextProps.data.logoUrl) {
+    return false;
+  }
+  if (prevProps.data.aboutUs !== nextProps.data.aboutUs) {
+    return false;
+  }
+  if (prevProps.data.themeColor !== nextProps.data.themeColor) {
+    return false;
+  }
+  if (prevProps.data.personalName !== nextProps.data.personalName) {
+    return false;
+  }
+  if (prevProps.data.personalAddress !== nextProps.data.personalAddress) {
+    return false;
+  }
+  if (prevProps.data.personalMobile !== nextProps.data.personalMobile) {
+    return false;
+  }
+  if (prevProps.data.personalEmail !== nextProps.data.personalEmail) {
+    return false;
+  }
+  if (prevProps.data.businessAddress !== nextProps.data.businessAddress) {
+    return false;
+  }
+  if (prevProps.data.businessMobile !== nextProps.data.businessMobile) {
+    return false;
+  }
+  if (prevProps.data.businessEmail !== nextProps.data.businessEmail) {
+    return false;
+  }
+  return true;
+}
+
+
+
+export default React.memo(MyDocument, areEqual);

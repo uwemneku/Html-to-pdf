@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState} from 'react'
 import { DataContext } from './../App';
-import { Box, Container, TextField } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
 import CropTest from '../components/CropImage';
 import AlertDialog from '../components/AlertDialog';
 import updateSateObject from '../Helpers/updateSateObject';
