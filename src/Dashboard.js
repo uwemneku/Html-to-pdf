@@ -1,4 +1,4 @@
-import { Box, Button, Container,  FormControlLabel, Grid, Hidden, Paper, Switch, Typography, useMediaQuery } from '@material-ui/core'
+import { Box, Button, Container,  FormControlLabel, Grid, Hidden, Paper, Switch, useMediaQuery } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import Template1 from './Templates/Template1'
 import BusinessDetails from './formdetails/BusinessDetails';
@@ -89,7 +89,7 @@ export default function EditHome() {
   
   
     return (
-        <Box className={classes.root} maxHeight="100vh" overflow="hidden" padding="20px" boxSizing="border-box" >
+        <Box className={classes.root} maxHeight="100vh" maxWidth="100vw" overflow="hidden" padding="20px" boxSizing="border-box" >
             <Grid container>
                 <Grid item className={classes.formsection} >
                     <PersonalDetails/>

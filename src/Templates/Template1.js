@@ -9,10 +9,13 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     
-    container:{
+    root:{
         maxWidth: theme.breakpoints.values.sm,
         [theme.breakpoints.down("sm")]:{
             maxWidth: theme.breakpoints.values.md
+        },
+        '& p':{
+            wordBreak: "break-word",
         }
     },
     mainHeader:{
@@ -37,7 +40,7 @@ export default function Template1() {
     const [data, setData] = useContext(DataContext)
     const classes = useStyles()
     return (
-        <Container  className={classes.container}  >
+        <Container  className={classes.root}  >
             <Paper style={{padding:"20px", minHeight:"90vh"}} >
                 <Box paddingTop="10px" marginBottom="20px" maxHeight="80px" overflow="hidden" >
                     <Grid container wrap="nowrap" direction="row" justifyContent="center" alignItems="center"  >
@@ -75,7 +78,7 @@ export default function Template1() {
                 </Box>
                 {
                     data.aboutUs &&
-                    <Box paddingBottom="10px" minHeight="150px" >
+                    <Box width="100%" paddingBottom="10px" minHeight="150px" >
                         <SectionHeading text="ABOUT US" />
                         <Box paddingTop="10px" paddingBottom="20px" >
                             <DocumentText>
@@ -197,7 +200,7 @@ const BulletPoint = ({full, text}) => (
 const DocumentText = ({children}) => {
     const classes = useStyles()
     return (
-        <Typography className={classes.documentText} variant="caption" style={{display:"block"}} >
+        <Typography display="block" component="p" className={classes.documentText} variant="caption"   >
             {children}
         </Typography>
     )

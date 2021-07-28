@@ -6,7 +6,7 @@ import {Route, Switch} from 'react-router-dom'
 import { Suspense } from 'react'
 import Preloader from './components/Preloader'
 import Template1 from './Templates/Template1'
-import EditHome from './EditHome'
+import EditHome from './Dashboard'
 
 
 export  const DataContext = React.createContext()
